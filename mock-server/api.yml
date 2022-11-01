@@ -1,0 +1,14 @@
+-  request:
+     url: /todos/1
+     method: GET
+   response:
+     - status: 200
+       headers:
+         content-type: application/json
+       file: 1.json
+
+-  request:
+     url: /todos/2
+     method: GET
+   response:
+     - status: 404
