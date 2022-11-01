@@ -10,24 +10,14 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class UserControllerTest {
+class UserControllerFailTest {
     @Autowired
     private TestRestTemplate template;
-    @Autowired
-    private UserRepository userRepository;
-
     @Test
-    @DisplayName("การทดสอบดึงข้อมูลผู้ใช้งาน")
-    void success_case() {
-        // Arrange
-        MyUser user = new MyUser();
-        user.setId(1);
-        user.setFirstName("Demo");
-        userRepository.save(user);
-        // Act
-        UserResponse response = template.getForObject("/users/1", UserResponse.class);
-        assertEquals(200, response.getHeader().getCode());
-        assertEquals(1, response.getBody().getId());
+    @DisplayName("การทดสอบไม่สามารถดึงข้อมูลผู้ใช้งาน ...")
+    void fail_case_with_404() {
+        UserResponse response = template.getForObject("/users/99", UserResponse.class);
+        assertEquals(404, response.getHeader().getCode());
+        assertEquals(99, response.getBody().getId());
     }
-
 }
