@@ -2,6 +2,7 @@ package com.example.workshop.users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Transactional
     public UserResponse getById(int id) {
         Optional<MyUser> result = userRepository.findById(id);
         if (result.isPresent()) {
