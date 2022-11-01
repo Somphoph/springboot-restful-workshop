@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class UserControllerAdvice {
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<UserResponse> userNotFound(UserNotFoundException userNotFoundException) {
-        Header header = new Header(200, "ok");
+        Header header = new Header(404, "ืUser not found");
         Body body = new Body(userNotFoundException.getId());
         UserResponse response = new UserResponse();
         response.setHeader(header);

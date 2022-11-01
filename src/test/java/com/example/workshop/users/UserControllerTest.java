@@ -21,4 +21,12 @@ class UserControllerTest {
         assertEquals(200, response.getHeader().getCode());
         assertEquals(1, response.getBody().getId());
     }
+
+    @Test
+    @DisplayName("การทดสอบไม่สามารถดึงข้อมูลผู้ใช้งาน ...")
+    void fail_case_with_404() {
+        UserResponse response = template.getForObject("/users/99", UserResponse.class);
+        assertEquals(404, response.getHeader().getCode());
+        assertEquals(99, response.getBody().getId());
+    }
 }

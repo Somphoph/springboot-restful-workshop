@@ -23,6 +23,7 @@ class UserControllerWebMvcTest {
     private MockMvc mvc;
     @MockBean
     private UserService userService;
+
     @Test
     @DisplayName("การทดสอบดึงข้อมูลผู้ใช้งาน")
     void getUserById() throws Exception {
@@ -40,7 +41,22 @@ class UserControllerWebMvcTest {
         byte[] data = mvcResult.getResponse().getContentAsByteArray();
         UserResponse response = mapper.readValue(data, UserResponse.class);
 
-        assertEquals(200,response.getHeader().getCode());
-        assertEquals(1,response.getBody().getId());
+        assertEquals(200, response.getHeader().getCode());
+        assertEquals(1, response.getBody().getId());
+    }
+
+    @Test
+    void getUserByIdWithUseNotFoundException() throws Exception {
+        // Arrange
+        when(userService.getById(100)).thenThrow(new UserNotFoundException("", 100));
+
+        // Act
+        MvcResult mvcResult = this.mvc.perform(get("/users/100").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn();
+        ObjectMapper mapper = new ObjectMapper();
+        byte[] data = mvcResult.getResponse().getContentAsByteArray();
+        UserResponse response = mapper.readValue(data, UserResponse.class);
+        assertEquals(404, response.getHeader().getCode());
+        assertEquals(100, response.getBody().getId());
     }
 }
