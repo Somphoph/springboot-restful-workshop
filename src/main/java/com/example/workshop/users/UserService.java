@@ -23,4 +23,9 @@ public class UserService {
         }
         throw new UserNotFoundException("User id = " + id + " not found.", id);
     }
+
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
 }
